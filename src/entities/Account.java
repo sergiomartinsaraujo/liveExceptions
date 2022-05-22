@@ -1,13 +1,15 @@
 package entities;
 
+import exceptions.BusinesExceptions;
+
 public class Account {
 	private Integer name;
 	private String holder;
 	private Double balance;
 	private Double withdrawLimit;
-	
+
 	public Account() {
-		
+
 	}
 
 	public Account(Integer name, String holder, Double balance, Double withdrawLimit) {
@@ -46,22 +48,24 @@ public class Account {
 	public void setWithdrawLimit(Double withdrawLimit) {
 		this.withdrawLimit = withdrawLimit;
 	}
-	 public void deposit(double amount) {
-		 balance += amount;
-	 }
-	 
-	 public void withdraw(double amount) {
-		 balance -= amount;
-	 }
-	
-	 public String valedateWithdraw(double amount) {
-	 if (amount > getBalance()) {
-			return "Withdraw error: not enough balance";
+	public void deposit(double amount) {
+		balance += amount;
+	}
+
+	public void withdraw(double amount) {
+
+		valedateWithdraw( amount);
+		balance -= amount;
+	}
+
+	private void valedateWithdraw(double amount) {
+		if (amount > getBalance()) {
+			throw new BusinesExceptions("Withdraw error: not enough balance");
 		}
-		else if(amount > getWithdrawLimit()) {
-			return "Withdraw error: the amount exceeds withdraw limit";
-			
+		if(amount > getWithdrawLimit()) {
+			throw new BusinesExceptions("Withdraw error: the amount exceeds withdraw limit");
 		}
-	 return null;
-	 }
+	}
 }
+
+
